@@ -1,0 +1,14 @@
+<h1>
+    Task:{{task.pk}}
+</h1>
+<h2>Task Details</h2>
+<p>Title: {{ task.title }}</p>
+<p>Description: {{ task.discription }}</p>
+<p>deadline: {{ task.deadline }}</p>
+<p>Status: {% if task.status %} Complete {% else %} Incomplete {% endif %}</p>
+
+<tr>
+    <td>
+        <a href="{% url 'task-edit' task.id %}"> Edit</a>
+    </td>
+</tr>
