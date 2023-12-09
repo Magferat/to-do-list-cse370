@@ -1,57 +1,50 @@
-<!-- <h2>User Name: {{request.user}}</h2>
-<hr>
-
-<h1>My Task</h1>
-<a href="{% url 'add_task' %}">Add Task</a>
-<table>
-    <th>
-        All Task
-    </th>
-
-    {% for task in tasks %}
-    <tr>
-
-
-    </tr>
-
-    <tr>
-        <td>
-            {{task.title}}
-        </td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>
-            <a href="{% url 'task' task.id %}"> details</a>
-        </td>
-    </tr>
-    {% empty %}
-    <h2>No task for now</h2>
-    {% endfor %}
-
-</table> -->
-
-<h2>User Name: {{ request.user }}</h2>
+{% if request.user.is_authenticated %}
+<p>User Name: {{ request.user }}</p>
+<a href="{% url 'logout' %}">Logout</a>
+{% else %}
+<a href="{% url 'login' %}">Login</a>
+{% endif %}
 <hr>
 
 <h1>My Task</h1>
 <a href="{% url 'add_task' %}">Add Task</a>
 
-{% if tasks %}
+{% if unfinished_tasks %}
+<!-- Unfinished tasks section -->
+<h2>Unfinished Tasks</h2>
 <table>
-    <th>
-        All Tasks
-    </th>
-    <th style="padding-bottom: 50px;"></th>
-    {% for task in tasks %}
+    <!-- Table header for unfinished tasks -->
+    {% for task in unfinished_tasks %}
     <tr>
+        <!-- Display details of unfinished tasks -->
         <td>{{ task.title }}</td>
         <td style="padding-left: 50px;"><a href="{% url 'task' task.id %}">Details</a></td>
-
-        <!-- <td><a href="{% url 'task' task.id %}">Details</a></td> -->
+        <td style="padding-left: 50px;">{{ task.deadline }}</td>
+        <td style="padding-left: 50px;"><a href="{% url 'task-delete' task.id %}">Delete</a></td>
     </tr>
     {% endfor %}
 </table>
 {% else %}
-<h2>No tasks for you</h2>
+<!-- No unfinished tasks message -->
+<h2>No unfinished tasks</h2>
+{% endif %}
+
+{% if finished_tasks %}
+<!-- Finished tasks section -->
+<h2>Finished Tasks</h2>
+<table>
+    <!-- Table header for finished tasks -->
+    {% for task in finished_tasks %}
+    <tr>
+        <!-- Display details of finished tasks -->
+        <td>{{ task.title }}</td>
+        <td style="padding-left: 50px;"><a href="{% url 'task' task.id %}">Details</a></td>
+        <td style="padding-left: 50px;">{{ task.deadline }}</td>
+        <td style="padding-left: 50px;"><a href="{% url 'task-delete' task.id %}">Delete</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<!-- No finished tasks message -->
+<h2>No finished tasks</h2>
 {% endif %}
