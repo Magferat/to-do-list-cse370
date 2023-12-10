@@ -8,7 +8,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, FormView
 from django.views.generic.edit import UpdateView
 from django.views.generic import TemplateView
-from .models import MyTask
+from .models import MyTask, UserProfile
 from django.urls import reverse_lazy
 import uuid
 from .forms import MyTaskForm
@@ -36,6 +36,8 @@ class RegisterPage(FormView):
 
      def form_valid(self, form):
           user = form.save()
+
+          UserProfile.objects.create(user= user)
           if user is not None:
                login(self.request, user)
           return super(RegisterPage,self).form_valid(form)
