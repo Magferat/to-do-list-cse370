@@ -1,22 +1,28 @@
-{% if request.user.is_authenticated %}
+<!-- {% if request.user.is_authenticated %}
 <p>User Name: {{ request.user }}</p>
 <a href="{% url 'logout' %}">Logout</a>
 {% else %}
 <a href="{% url 'login' %}">Login</a>
-{% endif %}
+{% endif %} -->
+<!-- 
+    
+    
 <hr>
+<h3>
+    <a href="{% url 'home' %}">Go to Home Page</a>
 
+</h3>
 <h1>My Task</h1>
 <a href="{% url 'add_task' %}">Add Task</a>
 
 {% if unfinished_tasks %}
-<!-- Unfinished tasks section -->
+ Unfinished tasks section
 <h2>Unfinished Tasks</h2>
 <table>
-    <!-- Table header for unfinished tasks -->
+     Table header for unfinished tasks 
     {% for task in unfinished_tasks %}
     <tr>
-        <!-- Display details of unfinished tasks -->
+         Display details of unfinished tasks
         <td>{{ task.title }}</td>
         <td style="padding-left: 50px;"><a href="{% url 'task' task.id %}">Details</a></td>
         <td style="padding-left: 50px;">{{ task.deadline }}</td>
@@ -25,18 +31,18 @@
     {% endfor %}
 </table>
 {% else %}
-<!-- No unfinished tasks message -->
+ No unfinished tasks message 
 <h2>No unfinished tasks</h2>
 {% endif %}
 
 {% if finished_tasks %}
-<!-- Finished tasks section -->
+ Finished tasks section 
 <h2>Finished Tasks</h2>
 <table>
-    <!-- Table header for finished tasks -->
-    {% for task in finished_tasks %}
+    Table header for finished tasks
+        {% for task in finished_tasks %}
     <tr>
-        <!-- Display details of finished tasks -->
+        Display details of finished tasks 
         <td>{{ task.title }}</td>
         <td style="padding-left: 50px;"><a href="{% url 'task' task.id %}">Details</a></td>
         <td style="padding-left: 50px;">{{ task.deadline }}</td>
@@ -45,6 +51,122 @@
     {% endfor %}
 </table>
 {% else %}
-<!-- No finished tasks message -->
+ No finished tasks message 
 <h2>No finished tasks</h2>
-{% endif %}
+{% endif %} -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Task Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom color for all buttons */
+        .custom-button {
+            background-color: #8fafc2;
+            /* Replace with your desired color */
+            border-color: #8fafc2;
+            /* Replace with your desired color */
+        }
+
+        .center-align {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+
+    <hr>
+    <h3>
+        <a href="{% url 'home' %}">Go to Home Page</a>
+    </h3>
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-12 text-center header-margin">
+                <h1>Manage Task</h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Task Card -->
+    <div class="container p-3">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Add New Task</h5>
+                        <p class="card-text">Click below to add a new task</p>
+                        <a href="{% url 'add_task' %}" class="btn btn-primary custom-button">Add Task</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <hr>
+    </div>
+
+    <!-- Unfinished tasks section -->
+    <div class="container mt-4">
+        <h3>Incomplete Tasks: {{ count_unfinished }}</h2>
+        </h3>
+        <p></p>
+        <p></p>
+        <div class="row">
+            {% for task in unfinished_tasks %}
+            <div class="col-md-3 mb-4 pr-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ task.title }}</h5>
+                        <p class="card-text">Deadline: {{ task.deadline }}</p>
+                        <a href="{% url 'task' task.id %}" class="btn btn-primary custom-button me-2">Details</a>
+                        <a href="{% url 'task-delete' task.id %}" class="btn btn-danger custom-button">Delete</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if unfinished_tasks|length == 0 %}
+        <h3>No Incomplete Tasks</h3>
+        {% endif %}
+        <hr>
+        <hr>
+    </div>
+
+    <!-- Finished tasks section -->
+    <div class="container mt-4">
+        <h3>Complete Tasks</h3>
+        <p></p>
+        <p></p>
+        <div class="row">
+            {% for task in finished_tasks %}
+            <div class="col-md-3 mb-4 pr-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ task.title }}</h5>
+                        <p class="card-text">Deadline: {{ task.deadline }}</p>
+                        <a href="{% url 'task' task.id %}" class="btn btn-primary custom-button me-2">Details</a>
+                        <a href="{% url 'task-delete' task.id %}" class="btn btn-danger custom-button">Delete</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if finished_tasks|length == 0 %}
+        <h3>No finished tasks</h3>
+        {% endif %}
+    </div>
+    <div class="container p-5">
+
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
