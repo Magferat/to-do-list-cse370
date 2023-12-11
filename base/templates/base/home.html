@@ -18,6 +18,48 @@
 
     {% include 'base/navbar.html' %}
 
+
+
+
+    <!--Syudy Timer-->
+    <h1>Want To Study?</h1>
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home</title>
+    </head>
+
+    <body>
+        <a href="{% url 'timer' %}"><button>Go to Study Timer</button></a>
+    </body>
+
+    </html>
+
+
+    <!-- mytask_list.html -->
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>My Task List</title>
+    </head>
+
+    <body>
+        <h1>My Diary</h1>
+        <a href="{% url 'create_note' %}"><button>Take a Note</button></a>
+        <a href="{% url 'my_notes' %}"><button>My Notes</button></a>
+    </body>
+
+    </html>
+
+
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

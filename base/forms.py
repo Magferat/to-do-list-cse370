@@ -1,6 +1,11 @@
 from django import forms
-from .models import MyTask
+from .models import MyTask, Timer, Note
 from datetime import datetime, time
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit, Row, Column
+
+
+
 
 class MyTaskForm(forms.ModelForm):
     class Meta:
@@ -30,3 +35,26 @@ class MyTaskForm(forms.ModelForm):
             task.save()
 
         return task
+    
+
+# =============
+
+
+class TimerForm(forms.ModelForm):
+    class Meta:
+        model = Timer
+        fields = ['minutes', 'seconds']
+
+class NoteForm(forms.ModelForm):
+    class Meta:
+        model = Note
+        fields = ['title', 'content']
+
+    def init(self, args, **kwargs):
+        super().init(args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.form_action = 'create_note'
+        self.helper.layout = Layout(
+            Submit('submit', 'Save Note')
+        )

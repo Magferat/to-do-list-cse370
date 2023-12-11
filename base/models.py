@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 # Create your models here.
-
 
 class MyTask(models.Model):
     
@@ -20,3 +20,22 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='userprofile', on_delete=models.CASCADE)
 
     active_team_id = models.IntegerField(default=0)
+
+
+class Timer(models.Model):
+    minutes = models.IntegerField(default=25)
+    seconds = models.IntegerField(default=0)
+
+class StudySession(models.Model):
+    duration = models.IntegerField()
+    start_time = models.DateTimeField(auto_now_add=True)
+
+
+
+class Note(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    created = models.DateTimeField(default=timezone.now, blank=True)
+
+    def __str__(self):
+        return self.title

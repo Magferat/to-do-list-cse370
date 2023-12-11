@@ -1,0 +1,90 @@
+<!-- update_note.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Note</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #F8F4E8;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .header {
+            background-color: #F8F4E8;
+            font-family: 'Georgia', serif;
+            border: 3px lightblue;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #updateHeader {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1F4172;
+        }
+
+        form {
+            width: 70%;
+            text-align: left;
+        }
+
+        label {
+            font-size: 20px;
+            color: #141E46;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #FFF7D4;
+            color: #141E46;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 120px;
+            padding: 10px 15px;
+            background-color: #C9A68A;
+            color: #FFFFFF;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        a button {
+            background-color: #C9A68A;
+            color: #FFFFFF;
+            padding: 10px 15px;
+            border: none;
+            text-decoration: none;
+            cursor: pointer;
+            margin-top: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Use a div element with the class header to create a header -->
+    <div class="header">
+        <div id="updateHeader">Update Note</div>
+    </div>
+    <form method="post" action="{% url 'update_note' form.instance.id %}" style="text-align: center;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update Note</button>
+    </form>
+    <a href="{% url 'my_notes' %}"><button>My Notes</button></a>
+</body>
+
+</html>
