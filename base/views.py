@@ -45,7 +45,7 @@ class CustomLoginView(LoginView):
      redirect_authenticated_user = True
 
      def get_success_url(self):
-          return reverse_lazy('home')
+          return reverse_lazy('allTask')
 
 
 class RegisterPage(FormView):
@@ -56,7 +56,6 @@ class RegisterPage(FormView):
 
      def form_valid(self, form):
           user = form.save()
-
           UserProfile.objects.create(user= user)
           if user is not None:
                login(self.request, user)

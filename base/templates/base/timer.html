@@ -97,7 +97,6 @@
                 let minutes = Math.floor(totalSeconds / 60);
                 let seconds = totalSeconds % 60;
 
-                // Update the timer display
                 timerDisplay.textContent = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
                 totalSeconds++;
@@ -134,7 +133,6 @@
             let form = event.target;
             let formData = new FormData(form);
 
-            // Make an AJAX call to your Django view to set the timer duration
             fetch(form.action, {
                 method: 'POST',
                 body: formData,
@@ -148,7 +146,6 @@
                     startTimer();
                 });
 
-            // Change background image on timer start
             setTimerBackground();
         });
     </script>
@@ -203,7 +200,6 @@
                 let minutes = Math.floor(totalSeconds / 60);
                 let seconds = totalSeconds % 60;
 
-                // Update the timer display
                 timerDisplay.textContent = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
                 totalSeconds++;
@@ -240,7 +236,6 @@
             let form = event.target;
             let formData = new FormData(form);
 
-            // Make an AJAX call to your Django view to set the timer duration
             fetch(form.action, {
                 method: 'POST',
                 body: formData,
@@ -254,7 +249,6 @@
                     startTimer();
                 });
 
-            // Change background image on timer start
             setTimerBackground();
         });
     </script>

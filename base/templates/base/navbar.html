@@ -9,8 +9,8 @@
     <title>Bootstrap Navbar</title>
     <style>
         nav_clr {
-            background-color: #2445a7;
-            color: #2e4a9e;
+            background-color: #1c202b;
+            color: #1c202b;
 
         }
     </style>
@@ -20,16 +20,13 @@
     <nav class="navbar navbar-expand-lg pb-3" style="background-color: #4c65af;">
         <div class="container">
             {% if request.user.is_authenticated %}
-            <!-- Navbar brand/logo -->
             <a class="navbar-brand" href="#" style="color: white;">Hello {{ request.user }}!</a>
 
-            <!-- Navbar toggler for mobile -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!-- Navbar links -->
             <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
@@ -45,7 +42,6 @@
                 </ul>
             </div>
 
-            <!-- User information and logout button aligned to the right -->
             <div class="navbar-nav ms-auto">
                 <form id="logoutForm" action="{% url 'logout' %}" method="post">
                     {% csrf_token %}
@@ -65,9 +61,7 @@
     <style>
         .nav-custom-link {
             color: #ffffff !important;
-            /* Change link color to white */
             font-weight: bold;
-            /* Set the font weight to bold */
         }
     </style>
 

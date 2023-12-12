@@ -46,7 +46,6 @@
 <html lang="en">
 
 <head>
-  <!-- Add some style to the header -->
   <style>
     body {
       margin: 0;
@@ -56,14 +55,11 @@
       align-items: center;
       height: 100vh;
       background-color: #F8F4E8;
-      /* Use a light beige color for the background */
     }
 
     .header {
       background-color: #F8F4E8;
-      /* Use the same color for the header */
       font-family: 'Georgia', serif;
-      /* Keep the same font for My Diary and Diary Entry */
       border: 3px lightblue;
       padding: 10px;
       text-align: center;
@@ -73,11 +69,8 @@
     #myDiary {
       font-size: 28px;
       font-weight: bold;
-      /* Make My Diary bold */
       margin-bottom: 10px;
-      /* Adjust the margin to position it lower */
       color: #1F4172;
-      /* Use a dark brown color for the text */
     }
 
     .container {
@@ -95,22 +88,16 @@
       height: 300px;
       font-size: 20px;
       font-family: 'Georgia', serif;
-      /* Use the same font as the rest */
       padding: 10px;
-      /* Add padding to match the styling */
       box-sizing: border-box;
-      /* Include padding in the width */
       background-color: #FFF7D4;
-      /* Use a light brown color for the input field */
       color: #141E46;
-      /* Use a white color for the text */
     }
 
     #diaryEntryLabel {
       font-size: 24px;
       margin-top: 20px;
       color: #141E46;
-      /* Use the same color as the heading */
     }
 
     #submitBtn,
@@ -118,20 +105,16 @@
       width: 120px;
       margin-top: 10px;
       background-color: #C9A68A;
-      /* Use the same color as the input field */
       color: #FFFFFF;
-      /* Use the same color as the input field text */
     }
   </style>
 </head>
 
 <body>
   {% include 'base/navbar.html' %}
-  <!-- Use a div element with the class header to create a header -->
   <div class="header">
     <div id="myDiary">My Diary</div>
   </div>
-  <!-- Use a div element with the class container to wrap the form -->
   <div class="container">
     <form id="noteForm">
       <label id="diaryEntryLabel" for="title">Diary Entry:</label>
