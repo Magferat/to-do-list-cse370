@@ -26,9 +26,6 @@ class Timer(models.Model):
     minutes = models.IntegerField(default=25)
     seconds = models.IntegerField(default=0)
 
-class StudySession(models.Model):
-    duration = models.IntegerField()
-    start_time = models.DateTimeField(auto_now_add=True)
 
 
 

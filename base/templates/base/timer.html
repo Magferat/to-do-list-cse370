@@ -12,10 +12,6 @@
             margin: 0;
             padding: 0;
             font-family: 'Arial', sans-serif;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -66,7 +62,7 @@
     </style>
 </head>
 
-<body id="timer-body" style="background-image: url('{% static 'images/background1.jpg' %}')">
+<body>
     <div id="timer-container">
         <h1>Study Timer</h1>
         <div id="timer">00:00</div>
@@ -96,7 +92,6 @@
 
                 let minutes = Math.floor(totalSeconds / 60);
                 let seconds = totalSeconds % 60;
-
                 timerDisplay.textContent = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
                 totalSeconds++;
@@ -114,15 +109,6 @@
             totalSeconds = 0;
             document.getElementById('timer').textContent = '00:00';
         }
-
-        function setTimerBackground() {
-            const body = document.getElementById('timer-body');
-            const images = ['background1', 'background2', 'background3']; // Remove ".jpg"
-            const randomIndex = Math.floor(Math.random() * images.length);
-            const imageUrl = `{% static 'images/' %}${images[randomIndex]}.jpg`; // Add ".jpg"
-            body.style.backgroundImage = `url('${imageUrl}')`;
-        }
-
 
         document.getElementById('start-button').addEventListener('click', startTimer);
         document.getElementById('pause-button').addEventListener('click', pauseTimer);
@@ -145,113 +131,8 @@
                     totalSeconds = data.timer_duration;
                     startTimer();
                 });
-
-            setTimerBackground();
         });
     </script>
 </body>
 
 </html>
-
-
-{% comment %}
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pomodoro</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-
-<body id="timer-body" style="background-image: url('{% static 'images/background1.jpg' %}')">
-    {% include 'base/navbar.html' %}
-    <div id="timer-container">
-        <h1>Study Timer</h1>
-        <div id="timer">00:00</div>
-        <form id="timer-form" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Set Timer</button>
-        </form>
-        <button id="start-button">Start</button>
-        <button id="pause-button">Pause</button>
-        <button id="stop-button">Stop</button>
-    </div>
-
-
-    <script>
-        let timerRunning = false;
-        let timerInterval;
-        let totalSeconds = 0;
-
-        function startTimer() {
-            timerRunning = true;
-            let timerDisplay = document.getElementById('timer');
-
-            timerInterval = setInterval(function () {
-                if (!timerRunning) {
-                    clearInterval(timerInterval);
-                    return;
-                }
-
-                let minutes = Math.floor(totalSeconds / 60);
-                let seconds = totalSeconds % 60;
-
-                timerDisplay.textContent = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-
-                totalSeconds++;
-            }, 1000);
-        }
-
-        function pauseTimer() {
-            timerRunning = false;
-            clearInterval(timerInterval);
-        }
-
-        function stopTimer() {
-            timerRunning = false;
-            clearInterval(timerInterval);
-            totalSeconds = 0;
-            document.getElementById('timer').textContent = '00:00';
-        }
-
-        function setTimerBackground() {
-            const body = document.getElementById('timer-body');
-            const images = ['background1', 'background2', 'background3']; // Remove ".jpg"
-            const randomIndex = Math.floor(Math.random() * images.length);
-            const imageUrl = `{% static 'images/' %}${images[randomIndex]}.jpg`; // Add ".jpg"
-            body.style.backgroundImage = `url('${imageUrl}')`;
-        }
-
-
-        document.getElementById('start-button').addEventListener('click', startTimer);
-        document.getElementById('pause-button').addEventListener('click', pauseTimer);
-        document.getElementById('stop-button').addEventListener('click', stopTimer);
-
-        document.getElementById('timer-form').addEventListener('submit', function (event) {
-            event.preventDefault();
-            let form = event.target;
-            let formData = new FormData(form);
-
-            fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value,
-                },
-            })
-                .then(response => response.json())
-                .then(data => {
-                    totalSeconds = data.timer_duration;
-                    startTimer();
-                });
-
-            setTimerBackground();
-        });
-    </script>
-</body>
-
-</html> {% endcomment %}

@@ -43,6 +43,7 @@ class TimerForm(forms.ModelForm):
         model = Timer
         fields = ['minutes', 'seconds']
 
+        
 class NoteForm(forms.ModelForm):
     class Meta:
         model = Note
@@ -50,9 +51,3 @@ class NoteForm(forms.ModelForm):
 
     def init(self, args, **kwargs):
         super().init(args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_method = 'post'
-        self.helper.form_action = 'create_note'
-        self.helper.layout = Layout(
-            Submit('submit', 'Save Note')
-        )

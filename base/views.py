@@ -8,7 +8,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, FormView
 from django.views.generic.edit import UpdateView
 from django.views.generic import TemplateView
-from .models import MyTask, UserProfile, Note
+from .models import MyTask, UserProfile, Note, Timer
 from django.urls import reverse_lazy
 import uuid
 from .forms import MyTaskForm
@@ -20,14 +20,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 # ====
 from django.views.decorators.http import require_POST
 from django.http import HttpResponse
-from .models import Timer, StudySession
 from .forms import TimerForm
 from .utils import StudyTimer
 import json
 from .models import Note
 from .forms import NoteForm
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
+
 
 
 # Create your views here.
@@ -123,7 +121,7 @@ class DeleteView(LoginRequiredMixin, DeleteView):
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_POST
-from .models import Timer, StudySession
+from .models import Timer
 from .forms import TimerForm
 import json
 
@@ -134,52 +132,36 @@ import json
 def timer(request):
     form = TimerForm()
     return render(request, 'base/timer.html', {'form': form})
-
 @require_POST
 def set_timer(request):
     form = TimerForm(request.POST)
     if form.is_valid():
         form.save()
         timer_duration = form.cleaned_data['minutes'] * 60 + form.cleaned_data['seconds']
-        
-        # Save study session to the database
-        study_session = StudySession.objects.create(duration=timer_duration)
-        
-        # Convert model to JSON and send it back to the client
-        data = {'timer_duration': timer_duration, 'session_id': study_session.id}
+        data = {'timer_duration': timer_duration}
         return HttpResponse(json.dumps(data), content_type="application/json")
     return redirect('timer')
 
-def store_study_session(request):
-    if request.method == 'POST':
-        duration = int(request.POST.get('duration', 0))
-        session = StudySession.objects.create(duration=duration)
-        sessions_count = StudySession.objects.count()
-        return JsonResponse({'session_id': session.id, 'sessions_count': sessions_count})
-    return JsonResponse({'error': 'Invalid request'})
-
-
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.http import require_POST
-from .models import Timer, StudySession
-from .forms import TimerForm
 
 def my_notes(request):
     notes = Note.objects.all()
     return render(request, 'base/my_notes.html', {'notes': notes})
 
 def create_note(request):
-    notes = Note.objects.all()
     form = NoteForm()
 
     if request.method == 'POST':
         form = NoteForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('my_notes')  
+            new_note = form.save(commit=False)
+            new_note.save()
+            print(f"Note saved: {new_note.title} - {new_note.content}")
+            return redirect('my_notes')
+        else:
+            print(f"Form errors: {form.errors}")
 
-    return render(request, 'base/create_note.html', {'form': form, 'notes': notes})
+    return render(request, 'base/create_note.html', {'form': form})
+
 
 def update_note(request, pk):
     note = Note.objects.get(id=pk)
@@ -201,8 +183,3 @@ def delete_note(request, pk):
         return redirect('my_notes')
 
     return render(request, 'base/delete_note.html', {'note': note})
-
-# class NoteDeleteView(DeleteView):
-#     model = Note
-#     template_name = 'delete_note.html'
-#     success_url = reverse_lazy('my_notes')
